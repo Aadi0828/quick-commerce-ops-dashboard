@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Commerce Operations Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f8cb46'/%3E%3Cpath d='M18 4 8 18h7l-1 10 10-14h-7z' fill='%23111'/%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="app">
+
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <!-- Logo: put your logo file next to index.html and name it logo.png -->
+      <div class="logo">
+        <img class="logo-img" src="blink-it-logo-.png" alt="Company logo"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <strong class="logo-fallback">Quick<em>Ops</em></strong>
+        <small class="logo-sub">Store Performance Suite</small>
+      </div>
+
+      <div class="nav-title">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="overview"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-item" data-page="manpower"><span class="nav-icon">◷</span> Manpower</button>
+        <button class="nav-item" data-page="inventory"><span class="nav-icon">▤</span> Inventory &amp; GRN</button>
+        <button class="nav-item" data-page="complaints"><span class="nav-icon">⚑</span> Complaints</button>
+        <button class="nav-item" data-page="productivity"><span class="nav-icon">▥</span> Productivity</button>
+      </nav>
+
+      <div class="nav-title">PROJECT</div>
+      <nav class="nav">
+        <button class="nav-item" data-page="about"><span class="nav-icon">ⓘ</span> About Dashboard</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-dot"></div>
+        <div>
+          <strong>Portfolio Demo</strong><br>
+          <span id="dataSourceLabel">Using sample data</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ MAIN ============ -->
+    <main class="main" id="main" data-page="overview">
+
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Operations Overview</h1>
+          <div class="muted" id="pageSubtitle">Blinkit Store Operations · Portfolio Project</div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-ghost hidden" id="resetData" type="button">↺ Back to demo data</button>
+          <label class="btn btn-dark" for="csvUpload">⬆ Upload CSV</label>
+          <input type="file" id="csvUpload" accept=".csv" hidden>
+          <span class="demo-label" id="demoBadge">DEMO DATA</span>
+          <div class="user-chip" title="Operations Analyst"><span class="avatar">OA</span></div>
+        </div>
+      </header>
+
+      <!-- Filters -->
+      <section class="filters" aria-label="Filters">
+        <div class="field">
+          <label for="storeFilter">Store</label>
+          <select id="storeFilter"></select>
+        </div>
+        <div class="field">
+          <label for="shiftFilter">Shift</label>
+          <select id="shiftFilter"></select>
+        </div>
+        <div class="field">
+          <label for="fromDate">From</label>
+          <input type="date" id="fromDate">
+        </div>
+        <div class="field">
+          <label for="toDate">To</label>
+          <input type="date" id="toDate">
+        </div>
+        <div class="field field-end">
+          <button class="btn btn-ghost" id="resetFilters" type="button">Reset filters</button>
+        </div>
+        <div class="range-label" id="rangeLabel"></div>
+      </section>
+
+      <!-- KPI cards -->
+      <section class="kpi-grid" aria-label="Key metrics">
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Total Orders</h3><span class="kpi-icon ic-yellow">📦</span></div>
+          <div class="kpi-value" id="kpiOrders">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendOrders"></span><span class="kpi-note">vs previous period</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Manpower Present</h3><span class="kpi-icon ic-blue">👥</span></div>
+          <div class="kpi-value" id="kpiManpower">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendManpower"></span><span class="kpi-note" id="noteManpower">attendance</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Average PPI</h3><span class="kpi-icon ic-green">⚡</span></div>
+          <div class="kpi-value" id="kpiPPI">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendPPI"></span><span class="kpi-note">target: 20</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Pending GRN</h3><span class="kpi-icon ic-red">🧾</span></div>
+          <div class="kpi-value" id="kpiGRN">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendGRN"></span><span class="kpi-note">units pending</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Complaints</h3><span class="kpi-icon ic-purple">📣</span></div>
+          <div class="kpi-value" id="kpiComplaints">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendComplaints"></span><span class="kpi-note" id="noteComplaints">of orders</span></div>
+        </article>
+      </section>
+
+      <!-- ============ PAGE: OVERVIEW ============ -->
+      <div class="page" data-page="overview">
+
+        <!-- Live store status: present SM + next truck -->
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Live Store Status</h2>
+              <p class="muted">Who is the Store Manager on shift, and which truck is arriving next</p>
+            </div>
+            <span class="live-pill"><span class="live-dot"></span><span id="liveClock">Live</span></span>
+          </div>
+          <div class="live-grid" id="liveGrid"></div>
+        </section>
+
+        <div class="grid grid-2-1">
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Orders Trend</h2><p class="muted">Daily orders for the selected range</p></div>
+            </div>
+            <div class="chart-wrap"><canvas id="ordersTrend"></canvas></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Shift Split</h2><p class="muted">Share of orders by shift</p></div>
+            </div>
+            <div class="chart-wrap"><canvas id="shiftSplit"></canvas></div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div><h2>Key Insights</h2><p class="muted">Auto-generated from the filtered data</p></div>
+          </div>
+          <ul class="insights" id="insightList"></ul>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div><h2>Store Operations Details</h2><p class="muted">Click a column heading to sort</p></div>
+            <div class="panel-actions">
+              <input type="text" id="tableSearch" placeholder="Search store, shift, date..." aria-label="Search table">
+              <button class="btn btn-ghost" id="exportCSV" type="button">⬇ Export CSV</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th data-sort="date">Date</th>
+                  <th data-sort="store">Store</th>
+                  <th data-sort="shift">Shift</th>
+                  <th data-sort="orders" class="num">Orders</th>
+                  <th data-sort="present" class="num">Manpower</th>
+                  <th data-sort="attendance" class="num">Attendance</th>
+                  <th data-sort="ppi" class="num">PPI</th>
+                  <th data-sort="grn" class="num">Pending GRN</th>
+                  <th data-sort="complaints" class="num">Complaints</th>
+                  <th data-sort="status">Status</th>
+                </tr>
+              </thead>
+              <tbody id="shiftTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="pager">
+            <span class="muted" id="tableInfo"></span>
+            <div>
+              <button class="btn btn-ghost" id="prevPage" type="button">← Prev</button>
+              <button class="btn btn-ghost" id="nextPage" type="button">Next →</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============ PAGE: MANPOWER ============ -->
+      <div class="page hidden" data-page="manpower">
+        <div class="mini-stats" id="manpowerStats"></div>
+
+        <div class="grid grid-eq">
+          <section class="panel">
+            <div class="panel-head"><div><h2>Planned vs Present</h2><p class="muted">Headcount by shift</p></div></div>
+            <div class="chart-wrap"><canvas id="manpowerShift"></canvas></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><div><h2>Attendance by Store</h2><p class="muted">Present ÷ planned</p></div></div>
+            <div class="chart-wrap"><canvas id="attendanceStore"></canvas></div>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="panel-head"><div><h2>Biggest Manpower Gaps</h2><p class="muted">Top 10 shifts running below plan</p></div></div>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Date</th><th>Store</th><th>Shift</th>

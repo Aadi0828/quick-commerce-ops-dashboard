@@ -1,0 +1,13 @@
+date,store,shift,orders,present,planned,ppi,grn
+2026-10-21,Gurugram – Sector 45,Morning,390,5,5,21.5,80
+2026-10-21,Gurugram – Sector 45,Evening,560,5,6,19.2,190
+2026-10-21,Gurugram – Sector 45,Night,265,4,4,22.0,120
+2026-10-21,Delhi – Dwarka,Morning,340,4,5,20.4,60
+2026-10-21,Delhi – Dwarka,Evening,490,6,6,21.8,150
+2026-10-21,Delhi – Dwarka,Night,230,4,4,18.7,95
+2026-10-22,Gurugram – Sector 45,Morning,410,5,5,22.3,70
+2026-10-22,Gurugram – Sector 45,Evening,575,6,6,20.9,160
+2026-10-22,Gurugram – Sector 45,Night,280,3,4,19.5,140
+2026-10-22,Delhi – Dwarka,Morning,355,5,5,21.1,55
+2026-10-22,Delhi – Dwarka,Evening,505,5,6,19.8,175
+2026-10-22,Delhi – Dwarka,Night,240,4,4,20.6,100
