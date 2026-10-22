@@ -2,7 +2,7 @@
 
 A responsive store-operations dashboard for a quick-commerce dark store, built with HTML, CSS and JavaScript as a portfolio project.
 
-**Live demo:** https://YOUR-USERNAME.github.io/quick-commerce-ops-dashboard/
+**Live demo:** https://Aadi0828.github.io/quick-commerce-ops-dashboard/
 
 > Disclaimer: All figures are fictional sample data. This is an independent portfolio project and is not affiliated with, or connected to, any company's internal systems.
 
