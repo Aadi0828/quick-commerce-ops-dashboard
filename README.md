@@ -1,3 +1,4 @@
+![Uploading image.png…]()
 # Quick Commerce Operations Dashboard
 
 A responsive store-operations dashboard for a quick-commerce dark store, built with HTML, CSS and JavaScript as a portfolio project.
