@@ -1,4 +1,4 @@
-/*=========================================================
+/* =========================================================
    QUICK COMMERCE OPERATIONS DASHBOARD  ·  script.js
    All data is fictional and generated for portfolio practice.
    ========================================================= */
