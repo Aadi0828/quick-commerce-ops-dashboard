@@ -1,471 +1,222 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quick Commerce Operations Dashboard | Aditya Kumar</title>
+  <title>Quick Commerce Operations Dashboard</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f8cb46'/%3E%3Cpath d='M18 4 8 18h7l-1 10 10-14h-7z' fill='%23111'/%3E%3C/svg%3E">
 
   <link rel="stylesheet" href="style.css">
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    /* Day and Night themes */
-    body {
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    body.night-mode {
-      background: #101827 !important;
-      color: #e5e7eb !important;
-    }
-
-    body.night-mode .panel,
-    body.night-mode .card,
-    body.night-mode .kpi-card,
-    body.night-mode .sidebar,
-    body.night-mode .topbar,
-    body.night-mode .table-container {
-      background-color: #1b2638 !important;
-      color: #e5e7eb !important;
-      border-color: #374151 !important;
-    }
-
-    body.night-mode p,
-    body.night-mode label,
-    body.night-mode th,
-    body.night-mode td,
-    body.night-mode h1,
-    body.night-mode h2,
-    body.night-mode h3 {
-      color: #e5e7eb;
-    }
-
-    body.night-mode input,
-    body.night-mode select {
-      background: #111827;
-      color: #ffffff;
-      border-color: #4b5563;
-    }
-
-    /* Hover highlighting */
-    .panel,
-    .kpi-card,
-    .card,
-    tbody tr,
-    .nav-item,
-    button {
-      transition: all 0.2s ease;
-    }
-
-    .panel:hover,
-    .kpi-card:hover,
-    .card:hover {
-      border-color: #38bdf8 !important;
-      box-shadow: 0 5px 20px rgba(56, 189, 248, 0.18);
-    }
-
-    tbody tr:hover {
-      background-color: rgba(56, 189, 248, 0.12) !important;
-    }
-
-    button:hover {
-      filter: brightness(1.1);
-      transform: translateY(-1px);
-    }
-
-    /* Custom dashboard controls */
-    .custom-controls {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 12px 0;
-    }
-
-    .custom-btn {
-      border: none;
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-weight: 600;
-      cursor: pointer;
-      background: #2563eb;
-      color: white;
-    }
-
-    .online-btn {
-      background: #15803d;
-    }
-
-    .offline-btn {
-      background: #dc2626;
-    }
-
-    .demo-badge {
-      display: inline-block;
-      padding: 7px 11px;
-      border-radius: 20px;
-      background: #dbeafe;
-      color: #1d4ed8;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    body.night-mode .demo-badge {
-      background: #263c5e;
-      color: #bfdbfe;
-    }
-
-    #storeStatus {
-      font-weight: bold;
-      padding: 8px 12px;
-      border-radius: 8px;
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    #storeStatus.offline {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    body.night-mode #storeStatus {
-      background: #14532d;
-      color: #bbf7d0;
-    }
-
-    body.night-mode #storeStatus.offline {
-      background: #7f1d1d;
-      color: #fecaca;
-    }
-  </style>
+  <script src="script.js" defer></script>
 </head>
 
 <body>
+  <div class="app">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <h2>Quick Commerce</h2>
-      <p>Operations Dashboard</p>
-    </div>
-
-    <nav>
-      <a href="#overview" class="nav-item active">Overview</a>
-      <a href="#manpower" class="nav-item">Manpower</a>
-      <a href="#inventory" class="nav-item">Inventory &amp; GRN</a>
-      <a href="#complaints" class="nav-item">Complaints</a>
-      <a href="#productivity" class="nav-item">Productivity</a>
-      <a href="#about" class="nav-item">About Dashboard</a>
-    </nav>
-  </aside>
-
-  <!-- Main content -->
-  <main class="main-content">
-
-    <header class="topbar">
-      <div>
-        <h1>Quick Commerce Operations Dashboard</h1>
-        <p>Monitor store performance and daily operations</p>
+    <!-- ============ SIDEBAR ============ -->
+    <aside class="sidebar">
+      <!-- Logo: put your logo file next to index.html and name it logo.png -->
+      <div class="logo">
+        <img class="logo-img" src="blink-it-logo-.png" alt="Company logo"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <strong class="logo-fallback">Quick<em>Ops</em></strong>
+        <small class="logo-sub">Store Performance Suite</small>
       </div>
-      <span class="demo-badge">Portfolio Demo by Aditya Kumar</span>
-    </header>
 
-    <!-- Custom controls -->
-    <div class="custom-controls">
-      <span id="storeStatus">● Store Online</span>
+      <div class="nav-title">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="overview"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-item" data-page="manpower"><span class="nav-icon">◷</span> Manpower</button>
+        <button class="nav-item" data-page="inventory"><span class="nav-icon">▤</span> Inventory &amp; GRN</button>
+        <button class="nav-item" data-page="complaints"><span class="nav-icon">⚑</span> Complaints</button>
+        <button class="nav-item" data-page="productivity"><span class="nav-icon">▥</span> Productivity</button>
+      </nav>
 
-      <button
-        type="button"
-        class="custom-btn online-btn"
-        id="toggleStoreBtn"
-        onclick="toggleStoreStatus()">
-        Set Store Offline
-      </button>
+      <div class="nav-title">PROJECT</div>
+      <nav class="nav">
+        <button class="nav-item" data-page="about"><span class="nav-icon">ⓘ</span> About Dashboard</button>
+      </nav>
 
-      <button
-        type="button"
-        class="custom-btn"
-        id="themeToggle"
-        onclick="toggleTheme()">
-        🌙 Night Mode
-      </button>
-    </div>
-
-    <!-- Keep your existing filters and CSV upload here -->
-    <section class="panel">
-      <div class="panel-head">
+      <div class="sidebar-footer">
+        <div class="status-dot"></div>
         <div>
-          <h2>Dashboard Controls</h2>
-          <p class="muted">Upload your data or reset the dashboard.</p>
+          <strong>Portfolio Demo</strong><br>
+          <span id="dataSourceLabel">Using sample data</span>
         </div>
       </div>
+    </aside>
 
-      <div class="custom-controls">
-        <label for="csvUpload">Upload CSV:</label>
-        <input type="file" id="csvUpload" accept=".csv">
+    <!-- ============ MAIN ============ -->
+    <main class="main" id="main" data-page="overview">
 
-        <button
-          type="button"
-          class="custom-btn"
-          id="resetData"
-          onclick="if (typeof resetData === 'function') resetData()">
-          Reset Data
-        </button>
-      </div>
-    </section>
-
-    <!-- Overview -->
-    <section id="overview" class="page">
-      <h2>Overview</h2>
-
-      <div class="kpi-grid">
-        <div class="kpi-card">
-          <h3>Total Orders</h3>
-          <p id="totalOrders">--</p>
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Operations Overview</h1>
+          <div class="muted" id="pageSubtitle">Blinkit Store Operations · Portfolio Project</div>
         </div>
 
-        <div class="kpi-card">
-          <h3>Orders Dispatched</h3>
-          <p id="ordersDispatched">--</p>
+        <div class="topbar-actions">
+          <button class="btn btn-ghost hidden" id="resetData" type="button">↺ Back to demo data</button>
+          <label class="btn btn-dark" for="csvUpload">⬆ Upload CSV</label>
+          <input type="file" id="csvUpload" accept=".csv" hidden>
+          <span class="demo-label" id="demoBadge">DEMO DATA</span>
+          <div class="user-chip" title="Operations Analyst"><span class="avatar">OA</span></div>
+        </div>
+      </header>
+
+      <!-- Filters -->
+      <section class="filters" aria-label="Filters">
+        <div class="field">
+          <label for="storeFilter">Store</label>
+          <select id="storeFilter"></select>
+        </div>
+        <div class="field">
+          <label for="shiftFilter">Shift</label>
+          <select id="shiftFilter"></select>
+        </div>
+        <div class="field">
+          <label for="fromDate">From</label>
+          <input type="date" id="fromDate">
+        </div>
+        <div class="field">
+          <label for="toDate">To</label>
+          <input type="date" id="toDate">
+        </div>
+        <div class="field field-end">
+          <button class="btn btn-ghost" id="resetFilters" type="button">Reset filters</button>
+        </div>
+        <div class="range-label" id="rangeLabel"></div>
+      </section>
+
+      <!-- KPI cards -->
+      <section class="kpi-grid" aria-label="Key metrics">
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Total Orders</h3><span class="kpi-icon ic-yellow">📦</span></div>
+          <div class="kpi-value" id="kpiOrders">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendOrders"></span><span class="kpi-note">vs previous period</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Manpower Present</h3><span class="kpi-icon ic-blue">👥</span></div>
+          <div class="kpi-value" id="kpiManpower">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendManpower"></span><span class="kpi-note" id="noteManpower">attendance</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Average PPI</h3><span class="kpi-icon ic-green">⚡</span></div>
+          <div class="kpi-value" id="kpiPPI">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendPPI"></span><span class="kpi-note">target: 20</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Pending GRN</h3><span class="kpi-icon ic-red">🧾</span></div>
+          <div class="kpi-value" id="kpiGRN">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendGRN"></span><span class="kpi-note">units pending</span></div>
+        </article>
+
+        <article class="kpi-card">
+          <div class="kpi-top"><h3>Complaints</h3><span class="kpi-icon ic-purple">📣</span></div>
+          <div class="kpi-value" id="kpiComplaints">–</div>
+          <div class="kpi-foot"><span class="trend" id="trendComplaints"></span><span class="kpi-note" id="noteComplaints">of orders</span></div>
+        </article>
+      </section>
+
+      <!-- ============ PAGE: OVERVIEW ============ -->
+      <div class="page" data-page="overview">
+
+        <!-- Live store status: present SM + next truck -->
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Live Store Status</h2>
+              <p class="muted">Who is the Store Manager on shift, and which truck is arriving next</p>
+            </div>
+            <span class="live-pill"><span class="live-dot"></span><span id="liveClock">Live</span></span>
+          </div>
+          <div class="live-grid" id="liveGrid"></div>
+        </section>
+
+        <div class="grid grid-2-1">
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Orders Trend</h2><p class="muted">Daily orders for the selected range</p></div>
+            </div>
+            <div class="chart-wrap"><canvas id="ordersTrend"></canvas></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Shift Split</h2><p class="muted">Share of orders by shift</p></div>
+            </div>
+            <div class="chart-wrap"><canvas id="shiftSplit"></canvas></div>
+          </section>
         </div>
 
-        <div class="kpi-card">
-          <h3>Cancellation Rate</h3>
-          <p id="cancellationRate">--</p>
+        <section class="panel">
+          <div class="panel-head">
+            <div><h2>Key Insights</h2><p class="muted">Auto-generated from the filtered data</p></div>
+          </div>
+          <ul class="insights" id="insightList"></ul>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div><h2>Store Operations Details</h2><p class="muted">Click a column heading to sort</p></div>
+            <div class="panel-actions">
+              <input type="text" id="tableSearch" placeholder="Search store, shift, date..." aria-label="Search table">
+              <button class="btn btn-ghost" id="exportCSV" type="button">⬇ Export CSV</button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th data-sort="date">Date</th>
+                  <th data-sort="store">Store</th>
+                  <th data-sort="shift">Shift</th>
+                  <th data-sort="orders" class="num">Orders</th>
+                  <th data-sort="present" class="num">Manpower</th>
+                  <th data-sort="attendance" class="num">Attendance</th>
+                  <th data-sort="ppi" class="num">PPI</th>
+                  <th data-sort="grn" class="num">Pending GRN</th>
+                  <th data-sort="complaints" class="num">Complaints</th>
+                  <th data-sort="status">Status</th>
+                </tr>
+              </thead>
+              <tbody id="shiftTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="pager">
+            <span class="muted" id="tableInfo"></span>
+            <div>
+              <button class="btn btn-ghost" id="prevPage" type="button">← Prev</button>
+              <button class="btn btn-ghost" id="nextPage" type="button">Next →</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ============ PAGE: MANPOWER ============ -->
+      <div class="page hidden" data-page="manpower">
+        <div class="mini-stats" id="manpowerStats"></div>
+
+        <div class="grid grid-eq">
+          <section class="panel">
+            <div class="panel-head"><div><h2>Planned vs Present</h2><p class="muted">Headcount by shift</p></div></div>
+            <div class="chart-wrap"><canvas id="manpowerShift"></canvas></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head"><div><h2>Attendance by Store</h2><p class="muted">Present ÷ planned</p></div></div>
+            <div class="chart-wrap"><canvas id="attendanceStore"></canvas></div>
+          </section>
         </div>
 
-        <div class="kpi-card">
-          <h3>Store Temperature</h3>
-          <p id="storeTemperature">22°C</p>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>Orders Overview</h2>
-        <canvas id="ordersChart"></canvas>
-      </div>
-
-      <div class="panel">
-        <h2>Store Performance</h2>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Store</th>
-                <th>Total Orders</th>
-                <th>Dispatched Orders</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="storeTableBody">
-              <tr>
-                <td colspan="4">Connect your existing dashboard data to display records.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Manpower -->
-    <section id="manpower" class="page">
-      <h2>Manpower</h2>
-
-      <div class="panel">
-        <h3>Manpower Performance</h3>
-        <canvas id="manpowerChart"></canvas>
-      </div>
-
-      <div class="panel">
-        <h3>Biggest Manpower Gaps</h3>
-        <p>Top shifts running below plan</p>
-
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Store</th>
-                <th>Shift</th>
-                <th>Planned Staff</th>
-                <th>Actual Staff</th>
-                <th>Gap</th>
-              </tr>
-            </thead>
-            <tbody id="manpowerTableBody">
-              <tr>
-                <td colspan="6">No data loaded.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Inventory -->
-    <section id="inventory" class="page">
-      <h2>Inventory &amp; GRN</h2>
-
-      <div class="panel">
-        <h3>Inventory Overview</h3>
-        <canvas id="inventoryChart"></canvas>
-      </div>
-
-      <div class="panel">
-        <h3>Inventory Records</h3>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Expected Quantity</th>
-                <th>Received Quantity</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="inventoryTableBody">
-              <tr>
-                <td colspan="4">No data loaded.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Complaints -->
-    <section id="complaints" class="page">
-      <h2>Complaints</h2>
-
-      <div class="panel">
-        <h3>Customer Complaints</h3>
-        <canvas id="complaintsChart"></canvas>
-      </div>
-
-      <div class="panel">
-        <h3>Complaint Records</h3>
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Store</th>
-                <th>Complaint Type</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="complaintsTableBody">
-              <tr>
-                <td colspan="4">No data loaded.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- Productivity -->
-    <section id="productivity" class="page">
-      <h2>Productivity</h2>
-
-      <div class="panel">
-        <h3>Productivity Overview</h3>
-        <canvas id="productivityChart"></canvas>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" class="page">
-      <div class="panel">
-        <h2>About Dashboard</h2>
-        <p>
-          This dashboard is a portfolio project created by Aditya Kumar
-          to demonstrate quick-commerce store operations, manpower,
-          inventory, customer complaints, and productivity tracking.
-        </p>
-        <p><strong>Portfolio Demo by Aditya Kumar</strong></p>
-        <p>Demonstration data may be used. Figures should not be treated as live store data unless connected to a real data source.</p>
-      </div>
-    </section>
-
-    <footer class="panel">
-      <p>Quick Commerce Operations Dashboard | Created by Aditya Kumar</p>
-    </footer>
-
-  </main>
-
-  <script>
-    // Day / Night mode
-    function toggleTheme() {
-      const isNight = document.body.classList.toggle("night-mode");
-      const button = document.getElementById("themeToggle");
-
-      button.textContent = isNight ? "☀️ Day Mode" : "🌙 Night Mode";
-
-      try {
-        localStorage.setItem("dashboardTheme", isNight ? "night" : "day");
-      } catch (error) {
-        // Continue without saving the preference.
-      }
-    }
-
-    // Restore saved theme
-    try {
-      if (localStorage.getItem("dashboardTheme") === "night") {
-        document.body.classList.add("night-mode");
-        document.getElementById("themeToggle").textContent = "☀️ Day Mode";
-      }
-    } catch (error) {
-      // Continue with day mode.
-    }
-
-    // Store Online / Offline status
-    let storeIsOnline = true;
-
-    function toggleStoreStatus() {
-      storeIsOnline = !storeIsOnline;
-
-      const status = document.getElementById("storeStatus");
-      const button = document.getElementById("toggleStoreBtn");
-
-      status.textContent = storeIsOnline
-        ? "● Store Online"
-        : "● Store Offline";
-
-      status.classList.toggle("offline", !storeIsOnline);
-
-      button.textContent = storeIsOnline
-        ? "Set Store Offline"
-        : "Set Store Online";
-
-      button.classList.toggle("online-btn", storeIsOnline);
-      button.classList.toggle("offline-btn", !storeIsOnline);
-    }
-
-    // Simple sidebar navigation
-    document.querySelectorAll(".nav-item").forEach(function (link) {
-      link.addEventListener("click", function (event) {
-        const targetId = link.getAttribute("href").slice(1);
-        const target = document.getElementById(targetId);
-
-        if (!target) return;
-
-        event.preventDefault();
-
-        document.querySelectorAll(".nav-item").forEach(function (item) {
-          item.classList.remove("active");
-        });
-
-        link.classList.add("active");
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    });
-  </script>
-
-  <script src="script.js"></script>
-</body>
-</html>
-```
+        <section class="panel">
+          <div class="panel-head"><div><h2>Biggest Manpower Gaps</h2><p class="muted">Top 10 shifts running below plan</p></div></div>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>Date</th><th>Store</th><th>Shift</th>
